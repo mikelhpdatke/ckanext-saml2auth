@@ -72,6 +72,9 @@ Required:
 
     # Corresponding SAML user field for email
     ckanext.saml2auth.user_email = email
+    
+    # Logout SSO via Redirect front page IDP 
+    ckanext.saml2auth.logout_redirect_url = https://slinkid.ptit.edu.vn/auth/realms/master/protocol/openid-connect/logout?redirect_uri=https%3A%2F%2Fopendata.aisenote.com%2Fuser%2Flogin
 
 
 Optional:

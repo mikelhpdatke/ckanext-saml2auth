@@ -36,7 +36,8 @@ def get_config():
     name_id_format = \
         aslist(ckan_config.get(u'ckanext.saml2auth.sp.name_id_format',
                                "urn:oasis:names:tc:SAML:2.0:nameid-format:persistent"))
-    name_id_policy_format = ckan_config.get(u'ckanext.saml2auth.sp.name_id_policy_format')
+    name_id_policy_format = ckan_config.get(
+        u'ckanext.saml2auth.sp.name_id_policy_format')
 
     location = \
         ckan_config.get(u'ckanext.saml2auth.idp_metadata.location')
@@ -48,18 +49,25 @@ def get_config():
     remote_cert = \
         ckan_config.get(u'ckanext.saml2auth.idp_metadata.remote_cert')
 
-    entity_id = ckan_config.get(u'ckanext.saml2auth.entity_id', u'urn:mace:umu.se:saml:ckan:sp')
-    response_signed = asbool(ckan_config.get(u'ckanext.saml2auth.want_response_signed', True))
-    assertion_signed = asbool(ckan_config.get(u'ckanext.saml2auth.want_assertions_signed', False))
-    any_signed = asbool(ckan_config.get(u'ckanext.saml2auth.want_assertions_or_response_signed', False))
+    entity_id = ckan_config.get(
+        u'ckanext.saml2auth.entity_id', u'urn:mace:umu.se:saml:ckan:sp')
+    response_signed = asbool(ckan_config.get(
+        u'ckanext.saml2auth.want_response_signed', True))
+    assertion_signed = asbool(ckan_config.get(
+        u'ckanext.saml2auth.want_assertions_signed', False))
+    any_signed = asbool(ckan_config.get(
+        u'ckanext.saml2auth.want_assertions_or_response_signed', False))
     key_file = ckan_config.get(u'ckanext.saml2auth.key_file_path', None)
     cert_file = ckan_config.get(u'ckanext.saml2auth.cert_file_path', None)
-    attribute_map_dir = ckan_config.get(u'ckanext.saml2auth.attribute_map_dir', None)
+    attribute_map_dir = ckan_config.get(
+        u'ckanext.saml2auth.attribute_map_dir', None)
     acs_endpoint = ckan_config.get('ckanext.saml2auth.acs_endpoint', '/acs')
     logout_requests_signed = \
         asbool(ckan_config.get(u'ckanext.saml2auth.logout_requests_signed', False))
     logout_expected_binding = ckan_config.get(u'ckanext.saml2auth.logout_expected_binding',
                                               entity.BINDING_HTTP_POST)
+    logout_redirect_url = ckan_config.get(
+        u'ckanext.saml2auth.logout_redirect_url', None)
 
     config = {
         u'entityid': entity_id,
@@ -83,8 +91,9 @@ def get_config():
         u'logout_expected_binding': logout_expected_binding,
         u'metadata': {},
         u'debug': 1 if debug else 0,
-        u'name_form': NAME_FORMAT_URI
-        }
+        u'name_form': NAME_FORMAT_URI,
+        u'logout_redirect_url': logout_redirect_url
+    }
 
     if name_id_policy_format:
         config[u'service'][u'sp'][u'name_id_policy_format'] = name_id_policy_format
@@ -92,7 +101,8 @@ def get_config():
     if key_file is not None and cert_file is not None:
         config[u'key_file'] = key_file
         config[u'cert_file'] = cert_file
-        config[u'encryption_keypairs'] = [{u'key_file': key_file, u'cert_file': cert_file}]
+        config[u'encryption_keypairs'] = [
+            {u'key_file': key_file, u'cert_file': cert_file}]
 
     if attribute_map_dir is not None:
         config[u'attribute_map_dir'] = attribute_map_dir
@@ -101,9 +111,9 @@ def get_config():
         config[u'metadata'][u'local'] = [local_path]
     elif location == u'remote':
         remote = [{
-                u'url': remote_url,
-                u'cert': remote_cert
-            }]
+            u'url': remote_url,
+            u'cert': remote_cert
+        }]
         config[u'metadata'][u'remote'] = remote
 
     return config

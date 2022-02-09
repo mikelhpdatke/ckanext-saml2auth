@@ -79,7 +79,8 @@ class Saml2AuthPlugin(plugins.SingletonPlugin):
 
         acs_endpoint = config.get('ckanext.saml2auth.acs_endpoint')
         if acs_endpoint and not acs_endpoint.startswith('/'):
-            raise RuntimeError('ckanext.saml2auth.acs_endpoint should start with a slash ("/")')
+            raise RuntimeError(
+                'ckanext.saml2auth.acs_endpoint should start with a slash ("/")')
 
     # IBlueprint
 
@@ -97,17 +98,18 @@ class Saml2AuthPlugin(plugins.SingletonPlugin):
 
     def logout(self):
 
-        response = _perform_slo()
+        response = redirect(sp_config()[u'logout_redirect_url'], code=302)
 
         if response:
+            response = redirect('/', code=302)
             domain = h.get_site_domain_for_cookie()
 
             # Clear auth cookie in the browser
-            response.set_cookie('auth_tkt', domain=domain, expires=0)
+            response.set_cookie('auth_tkt', '', domain=domain)
 
             # Clear session cookie in the browser
-            response.set_cookie('ckan', domain=domain, expires=0)
-
+            response.set_cookie('ckan', '', domain=domain)
+            log.info(response.set_cookie)
         return response
 
 
