@@ -100,16 +100,16 @@ class Saml2AuthPlugin(plugins.SingletonPlugin):
 
         response = redirect(sp_config()[u'logout_redirect_url'], code=302)
 
-        if response:
-            response = redirect('/', code=302)
-            domain = h.get_site_domain_for_cookie()
+        # if response:
+        #     response = redirect('/', code=302)
+        #     domain = h.get_site_domain_for_cookie()
 
-            # Clear auth cookie in the browser
-            response.set_cookie('auth_tkt', '', domain=domain)
+        #     # Clear auth cookie in the browser
+        #     response.set_cookie('auth_tkt', '', domain=domain)
 
-            # Clear session cookie in the browser
-            response.set_cookie('ckan', '', domain=domain)
-            log.info(response.set_cookie)
+        #     # Clear session cookie in the browser
+        #     response.set_cookie('ckan', '', domain=domain)
+        #     log.info(response.set_cookie)
         return response
 
 
